@@ -26,7 +26,7 @@ class GithubService
     request = Net::HTTP::Get.new(url)
     response = http.request(request)
     if response.code == '200'
-      GithubService.extract_packages(repo, JSON.parse(response.read_body)) if extract
+      PackageImportWorker.perform_async(repo, JSON.parse(response.read_body))
       return true
     else
       return false
