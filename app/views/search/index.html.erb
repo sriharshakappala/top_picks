@@ -34,7 +34,7 @@
           <% if match %>
             <td>*Imported*</td>
           <% else %>
-            <td><input class="import" type="button" onclick="repo_import('<%= repo['full_name'] %>')" value="Import Repo"></td>
+            <td id="td_<%= repo['full_name'].gsub('/', '_') %>"><input class="import" type="button" onclick="repo_import('<%= repo['full_name'] %>')" value="Import Repo"></td>
           <% end %>
         </tr>
       <% end %>
@@ -49,19 +49,13 @@ function repo_import(repo) {
     type: "post",
     url: url,
     data: { repo: repo }
+  }).done(function(response) {
+    var repo_id = repo.replace('/', '_')
+    if(response.presence == true) {
+      $('#td_' + repo_id).html('Your job is added to queue!')
+    } else {
+      $('#td_' + repo_id).html('There is no valid package.json file for this repository!')
+    }
   })
-  // $.ajax({
-  //   type: "post",
-  //   url: url,
-  //   data: { repo: repo },
-  //   dataType: 'json'
-  // }).done(function (response) {
-  //   if(response == true) {
-  //     console.log('Imported');
-  //   } else {
-  //     console.log("There's no valid package.json file");
-  //   }
-  // }
-  console.log(repo);
 }
 </script>

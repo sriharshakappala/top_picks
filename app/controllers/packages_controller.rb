@@ -8,7 +8,7 @@ class PackagesController < ApplicationController
 
   def import
     response = GithubService.check_for_package_json(params['repo'], true)
-    data = {:response => response}
+    data = {:presence => response}
     render json: data
   end
 
