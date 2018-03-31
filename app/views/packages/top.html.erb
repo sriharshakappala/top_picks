@@ -1,0 +1,15 @@
+<a href="/search"><< Back to Home</a><br>
+
+<h4>Most used packages</h4>
+<table>
+  <tr>
+    <th>Package Name</th>
+    <th>No.of times used across imported repos</th>
+  </tr>
+  <% @top_packages.each do |package| %>
+    <tr>
+      <td><%= package.name %></td>
+      <td><%= package.count %></td>
+    </tr>
+  <% end %>
+</table>

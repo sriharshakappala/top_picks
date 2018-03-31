@@ -2,7 +2,7 @@
 <% if params[:query].present? %>
   <a href="/search"><< Back to Home</a><br>
 <% end %>
-<a href="#">Top packages across Github</a><br><br>
+<a href="/packages/top">Top packages across imported repositories</a><br><br>
 
 <%= form_tag('/search', :method => :get) do %>
   <%= text_field_tag 'query', params[:query], :autocomplete => :off, :autofocus => true %>
