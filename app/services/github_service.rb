@@ -18,7 +18,7 @@ class GithubService
     return JSON.parse(results)
   end
 
-  def self.check_for_package_json repo, extract = true
+  def self.check_for_package_json repo, extract = false
     url = URI(RAW_FILE_DOMAIN + '/' + repo + '/master/package.json')
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
@@ -34,9 +34,15 @@ class GithubService
   end
 
   def self.extract_packages content
-    binding.pry
     if content['dependencies'].present?
-      content['content['dependencies']
+      content['dependencies'].each do |dependency|
+        package = Package.find_by_name(dependency[0])
+        if package.present?
+          package.update(count: (package.count.to_i + 1))
+        else
+          Package.create(name: dependency[0], count: 1)
+        end
+      end
     end
   end
 
