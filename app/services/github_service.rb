@@ -26,14 +26,15 @@ class GithubService
     request = Net::HTTP::Get.new(url)
     response = http.request(request)
     if response.code == '200'
-      GithubService.extract_packages JSON.parse(response.read_body) if extract
+      GithubService.extract_packages(repo, JSON.parse(response.read_body)) if extract
       return true
     else
       return false
     end
   end
 
-  def self.extract_packages content
+  def self.extract_packages repo, content
+    Repository.create(name: repo)
     if content['dependencies'].present?
       content['dependencies'].each do |dependency|
         package = Package.find_by_name(dependency[0])
