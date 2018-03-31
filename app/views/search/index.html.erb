@@ -1,7 +1,29 @@
-<h1>Toppack - Search any repository on Github instantly!</h1>
-<a href="#">Top packages across Github</a><br><br><br><br>
+<h1>Toppack - Search any JavaScript repository on Github instantly!</h1>
+<a href="#">Top packages across Github</a><br><br>
 
 <%= form_tag('/search', :method => :get) do %>
-  <%= text_field_tag 'query', '', :autocomplete => :off, :autofocus => true %>
+  <%= text_field_tag 'query', params[:query], :autocomplete => :off, :autofocus => true %>
   <%= submit_tag 'Search' %>
+<% end %>
+
+<br><br>
+<% if params[:query].present? %>
+  <% if @repos['total_count'] == 0 %>
+    <h4>Sorry! No results found for your search query</h4>
+  <% else %>
+    <table>
+      <tr>
+        <th>Repo Name</th>
+        <th>Stars</th>
+        <th>Forks</th>
+      </tr>
+      <% @repos['items'].each do |repo| %>
+        <tr>
+          <td><%= repo['full_name'] %></td>
+          <td><%= repo['stargazers_count'] %></td>
+          <td><%= repo['forks'] %></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 <% end %>
