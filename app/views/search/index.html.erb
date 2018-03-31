@@ -22,11 +22,20 @@
         <th>Import</th>
       </tr>
       <% @repos['items'].each do |repo| %>
-        <tr>
+        <% match = @repos_matching.include?(repo['full_name']) ? true : false %>
+        <% if match %>
+          <tr bgcolor = 'orange'>
+        <% else %>
+          <tr>
+        <% end %>
           <td><%= repo['full_name'] %></td>
           <td><%= repo['stargazers_count'] %></td>
           <td><%= repo['forks'] %></td>
-          <td><input class="import" type="button" onclick="repo_import('<%= repo['full_name'] %>')" value="Import Repo"></td>
+          <% if match %>
+            <td>*Imported*</td>
+          <% else %>
+            <td><input class="import" type="button" onclick="repo_import('<%= repo['full_name'] %>')" value="Import Repo"></td>
+          <% end %>
         </tr>
       <% end %>
     </table>
