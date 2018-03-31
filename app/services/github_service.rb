@@ -18,18 +18,25 @@ class GithubService
     return JSON.parse(results)
   end
 
-  def self.check_for_package_json repo
+  def self.check_for_package_json repo, extract = true
     url = URI(RAW_FILE_DOMAIN + '/' + repo + '/master/package.json')
     http = Net::HTTP.new(url.host, url.port)
     http.use_ssl = true
     http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     request = Net::HTTP::Get.new(url)
     response = http.request(request)
-    binding.pry
     if response.code == '200'
-      return "Your job has added to queue. This repo will be imported shortly!"
+      GithubService.extract_packages JSON.parse(response.read_body) if extract
+      return true
     else
-      return "This repo doesn't have any package.json file"
+      return false
+    end
+  end
+
+  def self.extract_packages content
+    binding.pry
+    if content['dependencies'].present?
+      content['content['dependencies']
     end
   end
 
