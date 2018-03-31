@@ -1,6 +1,7 @@
 <h1>Toppack - Search any repository on Github instantly!</h1>
+<a href="#">Top packages across Github</a><br><br><br><br>
 
 <%= form_tag('/search', :method => :get) do %>
-  <%= text_field_tag 'query' %>
+  <%= text_field_tag 'query', '', :autocomplete => :off, :autofocus => true %>
   <%= submit_tag 'Search' %>
 <% end %>
