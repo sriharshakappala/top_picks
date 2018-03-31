@@ -1,0 +1,6 @@
+<h1>Toppack - Search any repository on Github instantly!</h1>
+
+<%= form_tag('/search', :method => :get) do %>
+  <%= text_field_tag 'query' %>
+  <%= submit_tag 'Search' %>
+<% end %>
