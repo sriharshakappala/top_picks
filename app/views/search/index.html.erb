@@ -26,7 +26,7 @@
           <td><%= repo['full_name'] %></td>
           <td><%= repo['stargazers_count'] %></td>
           <td><%= repo['forks'] %></td>
-          <td></td>
+          <td><input class="import" type="button" onclick="repo_import('<%= repo['full_name'] %>')" value="Import Repo"></td>
         </tr>
       <% end %>
     </table>
@@ -34,4 +34,7 @@
 <% end %>
 
 <script>
+function repo_import(repo) {
+  console.log('Test');
+}
 </script>
