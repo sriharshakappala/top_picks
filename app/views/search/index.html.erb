@@ -44,6 +44,18 @@
 
 <script>
 function repo_import(repo) {
-  console.log('Test');
+  var url = '/packages/import';
+  $.ajax({
+    type: "post",
+    url: url,
+    data: { repo: repo },
+    dataType: 'json'
+  }).done(function (response) {
+    if(response == true) {
+      console.log('Imported');
+    } else {
+      console.log("There's no valid package.json file");
+    }
+  }
 }
 </script>
